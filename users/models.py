@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    username = None
+    """Модель пользователя"""
+    username = None  # Авторизация по email
 
     email = models.EmailField(
         unique=True, verbose_name="Почта", help_text="Укажите почту"
@@ -33,6 +34,7 @@ class User(AbstractUser):
         help_text="Загрузите аватар",
     )
 
+    # Авторизация по email
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
