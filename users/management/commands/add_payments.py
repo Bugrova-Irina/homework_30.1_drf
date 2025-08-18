@@ -37,10 +37,10 @@ class Command(BaseCommand):
             {
                 "user_id": 4,
                 "payment_date": "2025-05-04 00:00:00",
-                "paid_lesson_id": 1,
+                "paid_lesson_id": 3,
                 "amount": 800,
                 "payment_type": "cash",
-            }
+            },
         ]
 
         # Создаем оплату
@@ -72,15 +72,21 @@ class Command(BaseCommand):
 
             except User.DoesNotExist:
                 self.stdout.write(
-                    self.style.ERROR(f"Пользователь с ID {payment_data['user_id']} не найден")
+                    self.style.ERROR(
+                        f"Пользователь с ID {payment_data['user_id']} не найден"
+                    )
                 )
             except Course.DoesNotExist:
                 self.stdout.write(
-                    self.style.ERROR(f"Курс с ID {payment_data.get('paid_course_id')} не найден")
+                    self.style.ERROR(
+                        f"Курс с ID {payment_data.get('paid_course_id')} не найден"
+                    )
                 )
             except Lesson.DoesNotExist:
                 self.stdout.write(
-                    self.style.ERROR(f"Урок с ID {payment_data.get('paid_lesson_id')} не найден")
+                    self.style.ERROR(
+                        f"Урок с ID {payment_data.get('paid_lesson_id')} не найден"
+                    )
                 )
 
         self.stdout.write(self.style.SUCCESS("Все оплаты успешно созданы"))
