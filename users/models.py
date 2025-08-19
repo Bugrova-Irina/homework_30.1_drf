@@ -52,7 +52,7 @@ class Payment(models.Model):
 
     # Вид оплаты
     TRANSFER = "transfer"
-    CASH = "Cash"
+    CASH = "cash"
     PAYMENT_CHOICES = [
         (TRANSFER, "Оплата по счету"),
         (CASH, "Оплата наличными"),
