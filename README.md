@@ -39,6 +39,7 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
  - psycopg2 или psycopg2-binary
  - djangorestframework
  - django-filter
+ - djangorestframework-simplejwt
 
 В качестве базы данных используется PostgreSQL
 
@@ -72,6 +73,9 @@ poetry add djangorestframework
 ```
 ```
 poetry add django-filter
+```
+```
+poetry add djangorestframework-simplejwt
 ```
 
 ## Использование:
