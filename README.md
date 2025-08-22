@@ -1,6 +1,8 @@
 # Сервис для размещения учебных материалов на DjangoRestFramework
 python manage.py runserver - запуск веб-приложения. Ctrl+C - остановка сервера.
 
+python manage.py createsuperadmin - создание суперпользователя
+
 python manage.py add_users - создание тестовых пользователей
 
 python manage.py add_payments - создание тестовых оплат
