@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from materials.models import Course, Lesson
-
 
 class User(AbstractUser):
     """Модель пользователя"""
@@ -59,7 +57,7 @@ class Payment(models.Model):
     ]
 
     user = models.ForeignKey(
-        User,
+        "User",  # Строковая ссылка на модель User
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
         help_text="Укажите пользователя",
@@ -68,7 +66,7 @@ class Payment(models.Model):
         auto_now_add=True, verbose_name="Дата оплаты", help_text="Укажите дату оплаты"
     )
     paid_course = models.ForeignKey(
-        Course,
+        "materials.Course",  # Строковая ссылка на модель из другого приложения
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
@@ -76,7 +74,7 @@ class Payment(models.Model):
         help_text="Введите название курса",
     )
     paid_lesson = models.ForeignKey(
-        Lesson,
+        "materials.Lesson",  # Строковая ссылка на модель из другого приложения
         on_delete=models.SET_NULL,
         blank=True,
         null=True,

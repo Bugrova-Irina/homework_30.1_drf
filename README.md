@@ -1,11 +1,17 @@
 # Сервис для размещения учебных материалов на DjangoRestFramework
-python manage.py runserver - запуск веб-приложения. Ctrl+C - остановка сервера.
+```python manage.py runserver``` - запуск веб-приложения. Ctrl+C - остановка сервера.
 
-python manage.py createsuperadmin - создание суперпользователя
+```python manage.py createsuperadmin``` - создание суперпользователя
 
-python manage.py add_users - создание тестовых пользователей
+```python manage.py add_users``` - создание тестовых пользователей
 
-python manage.py add_payments - создание тестовых оплат
+```python manage.py add_payments``` - создание тестовых оплат
+
+```python manage.py backup_data``` - выгрузка всех данных по курсам, урокам, пользователям
+(без оплат) из БД в фикстуру в формате JSON. Сохраняется в папку backup.
+
+Восстановить данные по курсам, урокам, пользователям из фикстуры:
+```python manage.py loaddata backup/data.json```
 
 http://127.0.0.1:8000/users/payments?ordering=-payment_date - в Postman сортировка оплат
 по дате платежа в порядке убывания

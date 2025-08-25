@@ -1,0 +1,182 @@
+[
+{
+    "model": "materials.course",
+    "pk": 1,
+    "fields": {
+        "title": "Python",
+        "preview": "",
+        "description": "Programming language",
+        "owner": null
+    }
+},
+{
+    "model": "materials.course",
+    "pk": 2,
+    "fields": {
+        "title": "Java",
+        "preview": "",
+        "description": "Programming language",
+        "owner": null
+    }
+},
+{
+    "model": "materials.course",
+    "pk": 3,
+    "fields": {
+        "title": "C++",
+        "preview": "",
+        "description": "Old programming language",
+        "owner": null
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 1,
+    "fields": {
+        "title": "The begining",
+        "preview": "",
+        "description": "About Python",
+        "video": null,
+        "course": 1,
+        "owner": null
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+        "title": "Install programs",
+        "preview": "",
+        "description": "Programs for Python",
+        "video": null,
+        "course": 1,
+        "owner": null
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 3,
+    "fields": {
+        "title": "About Java",
+        "preview": "",
+        "description": "History of Java creation",
+        "video": null,
+        "course": 2,
+        "owner": null
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 4,
+    "fields": {
+        "title": "About C++",
+        "preview": "",
+        "description": "History of C++",
+        "video": null,
+        "course": 3,
+        "owner": null
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$ShJRUwPcP04TVVJ2Qk9b7Y$yC8ADhNnCSKBK1OyCyJUJSvPJm18wFhBnsDZIjl2R/I=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-25T06:22:55.632Z",
+        "email": "test1@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$L1VTIBfP0ojleOkXbnXX9o$QQ61//caJ6fiBkNKoNxxKgqOWQ9eI+hejI4h0s5fGn4=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-25T06:22:55.950Z",
+        "email": "test2@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$oCoUgrjKeOgYTjoot5glZP$ZNeayl/AjOwDYzDhGSjOLCoHQ4N7vyAzi4exo4vR2ug=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-25T06:22:56.257Z",
+        "email": "test3@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$8MbDWU3FQ0JbBiG7IAtcIn$4zH/SFXumyQ75eFe2CZAxaqtS5PKME/qB5f+3+xqW0s=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-25T06:22:56.564Z",
+        "email": "test4@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$c7OutRyJnOfNgdCSxGo8GR$ns75z9+WZNtaLjbhVPOvdYiKLhKNBB1Y8BJodwnQ9W4=",
+        "last_login": "2025-08-25T06:26:13.806Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-08-25T06:25:58.954Z",
+        "email": "admin@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
