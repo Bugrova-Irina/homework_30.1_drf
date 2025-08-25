@@ -10,6 +10,7 @@ from users.serializers import PaymentSerializer, UserSerializer
 
 class UserCreateAPIView(CreateAPIView):
     """Создание пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)  # Доступно неавторизованным пользователям
@@ -23,6 +24,7 @@ class UserCreateAPIView(CreateAPIView):
 
 class PaymentViewSet(ModelViewSet):
     """CRUD для платежей"""
+
     queryset = Payment.objects.all()
     filter_backends = [
         DjangoFilterBackend,

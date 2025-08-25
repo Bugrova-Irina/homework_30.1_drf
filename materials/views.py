@@ -32,13 +32,13 @@ class CourseViewSet(ModelViewSet):
         Назначение прав модераторам
         """
         # Модератор не может создавать
-        if self.action == 'create':
+        if self.action == "create":
             self.permission_classes = (~IsModer,)
         # Модератор или владелец может обновлять и просматривать
-        elif self.action in ['update', 'retrieve']:
+        elif self.action in ["update", "retrieve"]:
             self.permission_classes = (IsModer | IsOwner,)
         # Удалять может только владелец
-        elif self.action == 'destroy':
+        elif self.action == "destroy":
             self.permission_classes = (IsOwner | ~IsModer,)
         return super().get_permissions()
 

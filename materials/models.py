@@ -28,7 +28,7 @@ class Course(models.Model):
         null=True,
         blank=True,
         verbose_name="Владелец",
-        help_text="Укажите владельца курса"
+        help_text="Укажите владельца курса",
     )
 
     class Meta:
@@ -77,7 +77,7 @@ class Lesson(models.Model):
         null=True,
         blank=True,
         verbose_name="Владелец",
-        help_text="Укажите владельца урока"
+        help_text="Укажите владельца урока",
     )
 
     class Meta:

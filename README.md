@@ -53,6 +53,9 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
  - djangorestframework
  - django-filter
  - djangorestframework-simplejwt
+ - flake8
+ - black
+ - isort
 
 В качестве базы данных используется PostgreSQL
 
@@ -89,6 +92,15 @@ poetry add django-filter
 ```
 ```
 poetry add djangorestframework-simplejwt
+```
+```
+poetry add flake8
+```
+```
+poetry add black
+```
+```
+poetry add isort
 ```
 
 ## Использование:
