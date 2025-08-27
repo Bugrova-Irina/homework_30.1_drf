@@ -1,9 +1,17 @@
 # Сервис для размещения учебных материалов на DjangoRestFramework
-python manage.py runserver - запуск веб-приложения. Ctrl+C - остановка сервера.
+```python manage.py runserver``` - запуск веб-приложения. Ctrl+C - остановка сервера.
 
-python manage.py add_users - создание тестовых пользователей
+```python manage.py createsuperadmin``` - создание суперпользователя
 
-python manage.py add_payments - создание тестовых оплат
+```python manage.py add_users``` - создание тестовых пользователей
+
+```python manage.py add_payments``` - создание тестовых оплат
+
+```python manage.py backup_data``` - выгрузка всех данных по курсам, урокам, пользователям
+(без оплат) из БД в фикстуру в формате JSON. Сохраняется в папку backup.
+
+Восстановить данные по курсам, урокам, пользователям из фикстуры:
+```python manage.py loaddata backup/data.json```
 
 http://127.0.0.1:8000/users/payments?ordering=-payment_date - в Postman сортировка оплат
 по дате платежа в порядке убывания
@@ -27,6 +35,11 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
 моделей курсов, уроков, оплаты. Созданы кастомные команды для наполнения базы данных
 тестовыми пользователями и тестовыми оплатами. Для списка платежей настроена
 фильтрация по курсу, по уроку, по способу оплаты, а также сортировка по дате оплаты.
+Создана группа модераторов. Модераторы могут просматривать и обновлять курсы и уроки, 
+но не могут их создавать и удалять. Добавлено поле "Владелец" в модели курса и урока.
+При создании курса или урока, ему автоматически присваивается владелец - авторизованный
+на данный момент пользователь. Владелец может просматривать подробную информацию только
+о своих курсах или уроках, может их редактировать и удалять.
 
 ## Требования к окружению:
 
@@ -39,6 +52,10 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
  - psycopg2 или psycopg2-binary
  - djangorestframework
  - django-filter
+ - djangorestframework-simplejwt
+ - flake8
+ - black
+ - isort
 
 В качестве базы данных используется PostgreSQL
 
@@ -72,6 +89,18 @@ poetry add djangorestframework
 ```
 ```
 poetry add django-filter
+```
+```
+poetry add djangorestframework-simplejwt
+```
+```
+poetry add flake8
+```
+```
+poetry add black
+```
+```
+poetry add isort
 ```
 
 ## Использование:
