@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from materials.models import Course, Lesson
+from materials.pagination import CustomPagination
 from materials.serializers import (CourseDetailSerializer, CourseSerializer,
                                    LessonSerializer)
 from users.permissions import IsModer, IsOwner
@@ -14,6 +15,7 @@ class CourseViewSet(ModelViewSet):
     """CRUD курсов"""
 
     queryset = Course.objects.all()
+    pagination_class = CustomPagination
 
     def get_serializer_class(self):
         # Если нужно посмотреть детальную информацию о курсе
@@ -63,6 +65,7 @@ class LessonListApiView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = (IsAuthenticated, IsOwner)
+    pagination_class = CustomPagination
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
