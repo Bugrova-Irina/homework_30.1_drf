@@ -5,6 +5,7 @@ from materials.apps import MaterialsConfig
 from materials.views import (CourseViewSet, LessonCreateApiView,
                              LessonDestroyApiView, LessonListApiView,
                              LessonRetrieveApiView, LessonUpdateApiView)
+from users.views import SubscriptionAPIView
 
 app_name = MaterialsConfig.name
 
@@ -23,6 +24,7 @@ urlpatterns = [
     path(
         "lessons/<int:pk>/update/", LessonUpdateApiView.as_view(), name="lessons_update"
     ),
+    path("subscription/", SubscriptionAPIView.as_view(), name="subscription")
 ]
 
 urlpatterns += router.urls
