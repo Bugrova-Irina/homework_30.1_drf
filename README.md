@@ -13,6 +13,8 @@
 Восстановить данные по курсам, урокам, пользователям из фикстуры:
 ```python manage.py loaddata backup/data.json```
 
+```python manage.py test``` - запуск тестов
+
 http://127.0.0.1:8000/materials/subscription/ - в Postman задайте метод POST и отправьте
 запрос, например:
 ```
@@ -59,6 +61,9 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
 В описание курса добавлен признак "подписка", который указывает на то, что пользователь
 подписан на обновления курса или нет.
 
+Добавлено тестирование корректности работы CRUD уроков и функционала работы подписки
+на обновления курса. Добавлен отчет о покрытии тестами в папке htmlcov/index.html.
+
 
 ## Требования к окружению:
 
@@ -75,6 +80,7 @@ http://127.0.0.1:8000/users/payments?payment_type=transfer - в Postman филь
  - flake8
  - black
  - isort
+ - coverage
 
 В качестве базы данных используется PostgreSQL
 
@@ -120,6 +126,9 @@ poetry add black
 ```
 ```
 poetry add isort
+```
+```
+poetry add coverage
 ```
 
 ## Использование:
