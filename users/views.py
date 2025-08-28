@@ -54,7 +54,9 @@ class SubscriptionAPIView(APIView):
         course_id = self.request.data.get("subscribe_course")
         course_item = get_object_or_404(Course, pk=course_id)
 
-        subs_item, created = Subscription.objects.get_or_create(user=user, subscribe_course=course_item)
+        subs_item, created = Subscription.objects.get_or_create(
+            user=user, subscribe_course=course_item
+        )
 
         if created:
             message = "Подписка на обновление курса добавлена"

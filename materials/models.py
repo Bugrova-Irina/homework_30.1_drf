@@ -86,7 +86,8 @@ class Lesson(models.Model):
 
 
 class Subscription(models.Model):
-    """ Модель подписки """
+    """Модель подписки"""
+
     user = models.ForeignKey(
         "users.User",  # Строковая ссылка на модель User
         on_delete=models.CASCADE,
@@ -106,7 +107,7 @@ class Subscription(models.Model):
         blank=True,
         null=True,
         verbose_name="Статус подписки",
-        help_text="Укажите статус подписки"
+        help_text="Укажите статус подписки",
     )
 
     def __str__(self):

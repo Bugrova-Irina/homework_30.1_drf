@@ -13,11 +13,11 @@ class YoutubeURLValidator:
             return
 
         youtube_patterns = [
-            'https://youtube.com',
-            'https://www.youtube.com',
-            'http://youtube.com',
-            'http://www.youtube.com',
-            'https://youtu.be'
+            "https://youtube.com",
+            "https://www.youtube.com",
+            "http://youtube.com",
+            "http://www.youtube.com",
+            "https://youtu.be",
         ]
 
         # Проверяем, начинается ли строка с https://youtube.com

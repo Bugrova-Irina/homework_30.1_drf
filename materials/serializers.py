@@ -41,7 +41,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     # Вывод информации о подписке
     def get_subscription(self, obj):
-        user = self.context['request'].user
+        user = self.context["request"].user
         if user.is_authenticated:
             return Subscription.objects.filter(user=user, subscribe_course=obj).exists()
         return False
@@ -54,12 +54,12 @@ class CourseDetailSerializer(serializers.ModelSerializer):
             "description",
             "lesson_info",  # вывод информации об уроке
             "count_lessons_into_the_course",  # вывод количества уроков в курсе
-            "subscription", # вывод информации о подписке
+            "subscription",  # вывод информации о подписке
         )
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    """ Вывод информации о подписке """
+    """Вывод информации о подписке"""
 
     class Meta:
         model = Subscription
