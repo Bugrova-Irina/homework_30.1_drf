@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from materials.models import Course, Subscription
 from users.models import Payment, User
 from users.serializers import PaymentSerializer, UserSerializer
+from users.services import convert_rub_to_usd, create_stripe_price, create_stripe_session, create_stripe_product
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -64,3 +65,23 @@ class SubscriptionAPIView(APIView):
             subs_item.delete()
             message = "Подписка на обновление курса удалена"
         return Response({"message": message})
+
+
+class PaymentCreateAPIView(CreateAPIView):
+    """ Класс создания ссылки на оплату """
+    serializer_class = PaymentSerializer
+    queryset = Payment.objects.all()
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        amount_in_usd = convert_rub_to_usd(payment.amount)
+        product = create_stripe_product(
+            name=f"Payment for {
+            payment.paid_course or payment.paid_lesson
+            }"
+        )
+        price = create_stripe_price(amount_in_usd, product)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.link = payment_link
+        payment.save()
