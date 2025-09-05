@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 import stripe
+from django.urls import reverse_lazy
 
 from config.settings import STRIPE_API_KEY
 from forex_python.converter import CurrencyRates
@@ -36,7 +37,7 @@ def create_stripe_session(price):
     """ Создаем сессию на оплату в страйпе """
 
     session = stripe.checkout.Session.create(
-        success_url="http://127.0.0.1:8000/",
+        success_url=reverse_lazy('materials:courses'),
         line_items=[{"price": price.id, "quantity": 1}],
         mode="payment"
     )
