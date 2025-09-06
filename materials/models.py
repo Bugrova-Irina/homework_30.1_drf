@@ -33,7 +33,7 @@ class Course(models.Model):
     last_update_course = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата последнего обновления курса",
-        help_text="Укажите дату последнего обновления курса"
+        help_text="Укажите дату последнего обновления курса",
     )
 
     class Meta:
@@ -87,7 +87,7 @@ class Lesson(models.Model):
     last_update_lesson = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата последнего обновления курса",
-        help_text="Укажите дату последнего обновления курса"
+        help_text="Укажите дату последнего обновления курса",
     )
 
     class Meta:

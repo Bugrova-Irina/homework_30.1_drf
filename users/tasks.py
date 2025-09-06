@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from celery import shared_task
@@ -6,12 +7,10 @@ from django.utils import timezone
 
 from config.settings import EMAIL_HOST_USER
 from materials.models import Subscription
-
-import logging
-
 from users.models import User
 
 logger = logging.getLogger(__name__)
+
 
 @shared_task
 def send_email_about_course_update():
@@ -24,7 +23,9 @@ def send_email_about_course_update():
     # время 24 часа назад
     time_threshold = timezone.now() - timedelta(hours=24)
     # Получаем все активные подписки
-    subscriptions = Subscription.objects.filter(status=True).select_related('user', 'subscribe_course')
+    subscriptions = Subscription.objects.filter(status=True).select_related(
+        "user", "subscribe_course"
+    )
     user_updates = {}
 
     for subscription in subscriptions:
@@ -47,7 +48,10 @@ def send_email_about_course_update():
     # Отправляем письма пользователям
     for email, updates in user_updates.items():
         if updates:
-            message = "За последние 24 часа произошли следующие обновления:\n\n" + "\n".join(updates)
+            message = (
+                "За последние 24 часа произошли следующие обновления:\n\n"
+                + "\n".join(updates)
+            )
             try:
                 send_mail(
                     "Ежедневное обновление курсов",
@@ -62,6 +66,7 @@ def send_email_about_course_update():
 
     logger.info(f"Задача завершена. Обработано пользователей: {len(user_updates)}")
 
+
 # Проверка работы отправки писем с помощью тестовой задачи
 @shared_task
 def test_email():
@@ -72,6 +77,7 @@ def test_email():
         ["your-email@example.com"],
         fail_silently=False,
     )
+
 
 @shared_task
 def check_user_last_update():
@@ -85,13 +91,13 @@ def check_user_last_update():
     active_threshold = timezone.now() - timedelta(days=30)
 
     # Находим пользователей, которые не заходили более 30 дней
-    inactive_users = User.objects.filter(last_login__lt=active_threshold, is_active=True)
+    inactive_users = User.objects.filter(
+        last_login__lt=active_threshold, is_active=True
+    )
 
     # Находим пользователей, которые никогда не входили и созданы более 30 дней назад
     never_logged_in_users = User.objects.filter(
-        last_login__isnull = True,
-        date_joined__lt=active_threshold,
-        is_active=True
+        last_login__isnull=True, date_joined__lt=active_threshold, is_active=True
     )
 
     # Деактивируем их
@@ -99,8 +105,10 @@ def check_user_last_update():
     count_never_logged = never_logged_in_users.update(is_active=False)
     total_count = count_inactive + count_never_logged
 
-    logger.info(f"Деактивировано {total_count} пользователей "
-                f"(не заходили давно: {count_inactive} "
-                f"никогда не заходили: {count_never_logged})")
+    logger.info(
+        f"Деактивировано {total_count} пользователей "
+        f"(не заходили давно: {count_inactive} "
+        f"никогда не заходили: {count_never_logged})"
+    )
 
     return f"Деактивировано {total_count} пользователей"
