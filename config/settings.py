@@ -158,6 +158,17 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
+CELERY_BEAT_SCHEDULE = {
+    "send_email_about_course_update": {
+        "task": "users.tasks.send_email_about_course_update",
+        "schedule": timedelta(days=1),
+    },
+    "test_email": {
+        "task": "users.tasks.test_email",
+        "schedule": timedelta(days=1),
+    },
+}
+
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
