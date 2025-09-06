@@ -9,4 +9,4 @@ class UserAdmin(admin.ModelAdmin):
         "id",
         "email",
     )
-    list_display = ("id", "email")
+    list_display = ("id", "email", "is_active", "last_login")

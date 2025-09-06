@@ -167,6 +167,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "users.tasks.test_email",
         "schedule": timedelta(days=1),
     },
+    "check_user_last_update": {
+        "task": "users.tasks.check_user_last_update",
+        "schedule": timedelta(minutes=1),
+    },
 }
 
 EMAIL_HOST = os.getenv("EMAIL_HOST")

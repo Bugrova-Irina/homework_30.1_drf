@@ -8,6 +8,9 @@ from config.settings import EMAIL_HOST_USER
 from materials.models import Subscription
 
 import logging
+
+from users.models import User
+
 logger = logging.getLogger(__name__)
 
 @shared_task
@@ -69,3 +72,35 @@ def test_email():
         ["your-email@example.com"],
         fail_silently=False,
     )
+
+@shared_task
+def check_user_last_update():
+    """
+    Деактивирует пользователей, который последний раз
+    авторизовывались в сервисе больше 30 дней назад
+    """
+    logger.info("Запуск задачи проверки активности пользователй")
+
+    # Вычисляем дату, до которой если был вход, то пользователь считается активным
+    active_threshold = timezone.now() - timedelta(days=30)
+
+    # Находим пользователей, которые не заходили более 30 дней
+    inactive_users = User.objects.filter(last_login__lt=active_threshold, is_active=True)
+
+    # Находим пользователей, которые никогда не входили и созданы более 30 дней назад
+    never_logged_in_users = User.objects.filter(
+        last_login__isnull = True,
+        date_joined__lt=active_threshold,
+        is_active=True
+    )
+
+    # Деактивируем их
+    count_inactive = inactive_users.update(is_active=False)
+    count_never_logged = never_logged_in_users.update(is_active=False)
+    total_count = count_inactive + count_never_logged
+
+    logger.info(f"Деактивировано {total_count} пользователей "
+                f"(не заходили давно: {count_inactive} "
+                f"никогда не заходили: {count_never_logged})")
+
+    return f"Деактивировано {total_count} пользователей"
