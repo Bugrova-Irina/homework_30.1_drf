@@ -9,7 +9,8 @@ from rest_framework.viewsets import ModelViewSet
 from materials.models import Course, Subscription
 from users.models import Payment, User
 from users.serializers import PaymentSerializer, UserSerializer
-from users.services import convert_rub_to_usd, create_stripe_price, create_stripe_session, create_stripe_product
+from users.services import (convert_rub_to_usd, create_stripe_price,
+                            create_stripe_product, create_stripe_session)
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -68,7 +69,8 @@ class SubscriptionAPIView(APIView):
 
 
 class PaymentCreateAPIView(CreateAPIView):
-    """ Класс создания ссылки на оплату """
+    """Класс создания ссылки на оплату"""
+
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
 

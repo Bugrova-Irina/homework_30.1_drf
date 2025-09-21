@@ -30,6 +30,11 @@ class Course(models.Model):
         verbose_name="Владелец",
         help_text="Укажите владельца курса",
     )
+    last_update_course = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата последнего обновления курса",
+        help_text="Укажите дату последнего обновления курса",
+    )
 
     class Meta:
         verbose_name = "Курс"
@@ -79,6 +84,11 @@ class Lesson(models.Model):
         verbose_name="Владелец",
         help_text="Укажите владельца урока",
     )
+    last_update_lesson = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата последнего обновления курса",
+        help_text="Укажите дату последнего обновления курса",
+    )
 
     class Meta:
         verbose_name = "Урок"
@@ -103,7 +113,7 @@ class Subscription(models.Model):
         help_text="Введите название курса",
     )
     status = models.BooleanField(
-        default=False,
+        default=True,
         blank=True,
         null=True,
         verbose_name="Статус подписки",
