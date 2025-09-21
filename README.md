@@ -194,6 +194,86 @@ poetry add eventlet
 
 После запуска сервера перейдите по ссылке http://127.0.0.1:8000/materials/.
 
+### Запуск проекта с использованием Docker Compose:
+В корне проекта должны быть файлы:
+- Dockerfile
+- docker-compose.yml
+- .env (создайте на основе .env.sample со своими значениями)
+
+#### Команды для запуска:
+Выполните сборку образов:
+```
+docker-compose build
+```
+
+Запуск контейнеров в фоновом режиме:
+```
+docker-compose up -d
+```
+
+Убедитесь, что все контейнеры запущены:
+```
+docker-compose ps
+```
+
+Примените миграции базы данных:
+```
+docker-compose exec web python manage.py migrate
+```
+
+Создайте учетную запись администратора
+```
+docker-compose exec web python manage.py createsuperadmin
+```
+
+Проверка работы приложения:
+Перейдите по адресу: http://localhost:8002/materials/lessons/
+
+#### Проверка работоспособности сервисов
+1. Веб-сервис (Django). Откройте в браузере http://localhost:8002/ или выполните команду:
+```
+curl -X GET http://localhost:8002/materials/lessons/
+```
+2. База данных (PostgreSQL):
+```
+docker-compose exec db psql -U your_database_user -d your_database_name -c "\dt"
+```
+Результат: должен отобразить список таблиц в базе данных.
+
+3. Redis:
+```
+docker-compose exec redis redis-cli ping
+```
+Результат: должен вернуть PONG.
+
+4. Celery Worker:
+```
+docker-compose logs celery
+```
+Результат: в логах должны быть сообщения об успешном запуске worker.
+
+5. Celery Beat:
+```
+docker-compose logs beat
+```
+Результат: в логах должны быть сообщения о запуске планировщика.
+
+6. Административная панель Django:
+Откройте в браузере http://localhost:8002/admin/
+
+7. Остановка контейнеров:
+```
+docker-compose down
+```
+8. Перезапуск с пересборкой образов:
+```
+docker-compose up -d --build
+```
+Просмотр логов конкретного сервиса (web, db, redis, celery, beat):
+```
+docker-compose logs [service_name]
+```
+
 ## Тестирование:
 
 Добавлено тестирование корректности работы CRUD уроков и функционала работы подписки
