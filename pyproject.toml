@@ -35,7 +35,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 packages = [
-    {include = "homework_30"},
     {include = "config"},
-    {include = "users"}
+    {include = "users"},
+    {include = "materials"},
 ]
