@@ -66,24 +66,45 @@ class LessonTestCase(APITestCase):
         url = reverse("materials:lessons-list")
         response = self.client.get(url)
         data = response.json()
-        result = {
-            "count": 1,
-            "next": None,
-            "previous": None,
-            "results": [
-                {
-                    "id": self.lesson.pk,
-                    "video": "https://youtube.com/",
-                    "title": self.lesson.title,
-                    "preview": None,
-                    "description": self.lesson.description,
-                    "course": self.course.pk,
-                    "owner": self.user.pk,
-                }
-            ],
-        }
+        # result = {
+        #     "count": 1,
+        #     "next": None,
+        #     "previous": None,
+        #     "results": [
+        #         {
+        #             "id": self.lesson.pk,
+        #             "video": "https://youtube.com/",
+        #             "title": self.lesson.title,
+        #             "preview": None,
+        #             "description": self.lesson.description,
+        #             "course": self.course.pk,
+        #             "owner": self.user.pk,
+        #         }
+        #     ],
+        # }
+
+        # Проверяем статус код
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data, result)
+
+        # Проверяем основную структуру ответа
+        self.assertEqual(data["count"], 1)
+        self.assertEqual(data["next"], None)
+        self.assertEqual(data["previous"], None)
+        self.assertEqual(len(data["results"]), 1)
+
+        # Проверяем данные первого урока
+        lesson_data = data["result"][0]
+        self.assertEqual(lesson_data["id"], self.lesson.pk)
+        self.assertEqual(lesson_data["video"], "https://youtube.com")
+        self.assertEqual(lesson_data["title"], self.lesson.title)
+        self.assertEqual(lesson_data["preview"], None)
+        self.assertEqual(lesson_data["description"], self.lesson.description)
+        self.assertEqual(lesson_data["course"], self.course.pk)
+        self.assertEqual(lesson_data["owner"], self.user.pk)
+
+        # Проверяем, что полу last_update_lesson присутствует,
+        # но не проверяем точное значение
+        self.assertEqual("last_update_lesson", lesson_data)
 
 
 class SubscriptionTestCase(APITestCase):
