@@ -104,7 +104,7 @@ class LessonTestCase(APITestCase):
 
         # Проверяем, что полу last_update_lesson присутствует,
         # но не проверяем точное значение
-        self.assertEqual("last_update_lesson", lesson_data)
+        self.assertIn("last_update_lesson", lesson_data)
 
 
 class SubscriptionTestCase(APITestCase):
