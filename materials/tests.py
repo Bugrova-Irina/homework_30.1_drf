@@ -95,7 +95,7 @@ class LessonTestCase(APITestCase):
         # Проверяем данные первого урока
         lesson_data = data["results"][0]
         self.assertEqual(lesson_data["id"], self.lesson.pk)
-        self.assertEqual(lesson_data["video"], "https://youtube.com")
+        self.assertEqual(lesson_data["video"], "https://youtube.com/")
         self.assertEqual(lesson_data["title"], self.lesson.title)
         self.assertEqual(lesson_data["preview"], None)
         self.assertEqual(lesson_data["description"], self.lesson.description)
