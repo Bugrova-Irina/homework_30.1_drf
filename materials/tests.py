@@ -93,7 +93,7 @@ class LessonTestCase(APITestCase):
         self.assertEqual(len(data["results"]), 1)
 
         # Проверяем данные первого урока
-        lesson_data = data["result"][0]
+        lesson_data = data["results"][0]
         self.assertEqual(lesson_data["id"], self.lesson.pk)
         self.assertEqual(lesson_data["video"], "https://youtube.com")
         self.assertEqual(lesson_data["title"], self.lesson.title)
