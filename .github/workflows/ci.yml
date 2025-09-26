@@ -80,6 +80,13 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction
 
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready.-h localhost -p 5432; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+
       - name: Run migrate
         run: poetry run python manage.py migrate
 
@@ -101,7 +108,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }} .
 
       - name: Push Docker image in Docker hub
-        run: dicker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest

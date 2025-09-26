@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -7,6 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+TESTING = 'test' in sys.argv
 
 
 # Quick-start development settings - unsuitable for production
@@ -81,8 +84,16 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+if TESTING:
+    # Используем SQLite для тестов
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
+    }
 # Автоматическое определение окружения
-if os.getenv('DOCKER_CONTAINER', False):
+elif os.getenv('DOCKER_CONTAINER', False):
     # Мы в Docker-контейнере
     DATABASES = {
         "default": {
