@@ -82,10 +82,30 @@ jobs:
 
       - name: Wait for PostgreSQL
         run: |
-          until pg_isready.-h localhost -p 5432; do
-            echo "Waiting for PostgreSQL..."
-            sleep 2
-          done
+          python -c "
+          import time
+          import psycopg2
+          from psycopg2 import OperationalError
+          
+          for i in range(10):
+            try:
+              conn = psycopg2.connect(
+                  dbname='test_db',
+                  user='postgres', 
+                  password='postgres',
+                  host='localhost',
+                  port=5432
+              )
+              conn.close()
+              print('PostgreSQL is ready!')
+              break
+            except OperationalError:
+                print(f'Waiting for PostgreSQL... (attempt {i+1}/10)')
+                time.sleep(2)
+          else:
+              print('PostgreSQL not ready after 10 attempts')
+              exit(1)
+          "
 
       - name: Run migrate
         run: poetry run python manage.py migrate
