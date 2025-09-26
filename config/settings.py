@@ -9,7 +9,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-TESTING = 'test' in sys.argv
+TESTING = 'test' in sys.argv or os.getenv('GITHUB_ACTIONS')
 
 
 # Quick-start development settings - unsuitable for production

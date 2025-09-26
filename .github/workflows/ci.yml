@@ -29,27 +29,8 @@ jobs:
   test:
     needs: lint
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
 
     env:
-      DB_NAME: test_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_HOST: localhost
-      DB_PORT: 5432
       SECRET_KEY: "dummy-key-for-test"
       DEBUG: "False"
 
@@ -79,33 +60,6 @@ jobs:
 
       - name: Install dependencies
         run: poetry install --no-interaction
-
-      - name: Wait for PostgreSQL
-        run: |
-          python -c "
-          import time
-          import psycopg2
-          from psycopg2 import OperationalError
-          
-          for i in range(10):
-            try:
-              conn = psycopg2.connect(
-                  dbname='test_db',
-                  user='postgres', 
-                  password='postgres',
-                  host='localhost',
-                  port=5432
-              )
-              conn.close()
-              print('PostgreSQL is ready!')
-              break
-            except OperationalError:
-                print(f'Waiting for PostgreSQL... (attempt {i+1}/10)')
-                time.sleep(2)
-          else:
-              print('PostgreSQL not ready after 10 attempts')
-              exit(1)
-          "
 
       - name: Run migrate
         run: poetry run python manage.py migrate
