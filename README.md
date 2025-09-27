@@ -275,20 +275,169 @@ docker-compose logs [service_name]
 ```
 
 ## Настройка удаленного сервера и деплоя
-1. Установите Python 3.9 и выше.
+1. Установите Python 3.13.
 2. Установите Django версии 3.2.
 3. Установите Gunicorn и Nginx для обработки запросов.
+
+#### Подключение к серверу:
+```
+ssh username@server_ip
+```
+
+#### Обновление системы:
+```
+sudo apt update && sudo apt upgrade -y
+```
+
+#### Установка базовых пакетов:
+```
+sudo apt install -y curl wget git htop nano ufw
+```
+
+#### Настройка брандмауэра:
+```
+sudo ufw allow ssh
+```
+```
+sudo ufw allow 80
+```
+```
+sudo ufw allow 443
+```
+```
+sudo ufw enable
+```
 
 ### Настройка сервера
 1. Настройте SSH-доступ с использованием SSH-ключей для повышения безопасности.
 2. Закройте все ненужные порты, оставив открытыми только те, которые необходимы (например, 80 для HTTP и 443 для HTTPS).
 3. Установите и настройте Supervisor для автоматического перезапуска приложения при изменениях.
 
+### Создание пользователя для деплоя
+Создание пользователя
+```
+sudo adduser deployer
+```
+```
+sudo usermod -aG sudo deployer
+```
+
+Настройка SSH-доступа
+```
+sudo mkdir /home/deployer/.ssh
+```
+```
+sudo cp ~/.ssh/authorized_keys /home/deployer/.ssh/
+```
+```
+sudo chown -R deployer:deployer /home/deployer/.ssh
+```
+```
+sudo chmod 700 /home/deployer/.ssh
+```
+```
+sudo chmod 600 /home/deployer/.ssh/authorized_keys
+```
+
+### Настройка Docker и Docker Compose
+#### Установка Docker
+```
+curl -fsSL https://get.docker.com -o get-docker.sh
+```
+```
+sudo sh get-docker.sh
+```
+#### Добавление пользователя в группу docker
+```
+sudo usermod -aG docker $USER
+```
+```
+sudo usermod -aG docker deployer
+```
+#### Перезагрузка сессии
+```
+newgrp docker
+```
+#### Проверка установки
+```
+docker --version
+```
+#### Установка Docker Compose
+#### Скачивание последней версии
+```
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+#### Назначение прав
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
+#### Проверка установки
+```
+docker-compose --version
+```
 ### Деплой
 1. Склонируйте репозиторий на сервер.
 2. Выполните миграции базы данных с помощью команды python manage.py migrate.
 3. Запустите сервер с помощью Gunicorn: gunicorn myproject.wsgi:application.
 4. Настройте Nginx для проксирования запросов к Gunicorn.
+
+### Выполните на сервере команды:
+На сервере настроен systemd для автоматического управления.
+#### Создание systemd сервиса
+```
+sudo nano /etc/systemd/system/myapp.service
+```
+
+Приложение будет автоматически запускаться и перезапускаться при изменениях или сбоях
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl restart myapp.service
+```
+```
+sudo systemctl status myapp.service
+```
+Удаленный сервер может автоматически перезагружать приложение при внесении изменений.
+Workflow запускается при каждом push в репозиторий. Проект автоматически деплоится 
+на удаленный сервер. Все чувствительные данные вынесены в переменные окружения и 
+подключены к workflow через Secrets GitHub. В secrets and variables задайте секреты
+
+DEPLOY_DIR
+DOCKER_HUB_ACCESS_TOKEN
+DOCKER_HUB_USERNAME
+SECRET_KEY
+SERVER_IP
+SSH_KEY
+SSH_USER
+
+Проверьте работу приложения по адресу http://your_server_name/materials/
+
+#### команды для мониторинга работы приложения на сервере
+#### Статус приложения
+```
+sudo systemctl status myapp.service
+```
+#### Логи приложения
+```
+sudo journalctl -u myapp.service -f
+```
+#### Логи Docker контейнера
+```
+docker logs myapp
+```
+#### Использование ресурсов
+```
+docker stats myapp
+```
+#### Проверка сети
+```
+sudo netstat -tulpn | grep :80
+```
+#### Проверка доступности
+```
+curl -I http://localhost/
+```
 
 ## Тестирование:
 
