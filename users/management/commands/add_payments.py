@@ -57,7 +57,7 @@ class Command(BaseCommand):
                 if "paid_lesson_id" in payment_data:
                     paid_lesson = Lesson.objects.get(id=payment_data["paid_lesson_id"])
 
-                payment = Payment.objects.create(
+                Payment.objects.create(
                     user=user,
                     payment_date=payment_data["payment_date"],
                     paid_course=paid_course,

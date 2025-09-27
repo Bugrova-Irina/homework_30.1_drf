@@ -79,7 +79,7 @@ class PaymentCreateAPIView(CreateAPIView):
         amount_in_usd = convert_rub_to_usd(payment.amount)
         product = create_stripe_product(
             name=f"Payment for {
-            payment.paid_course or payment.paid_lesson
+                payment.paid_course or payment.paid_lesson
             }"
         )
         price = create_stripe_price(amount_in_usd, product)
