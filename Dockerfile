@@ -14,7 +14,7 @@ RUN pip install poetry && \
 
 COPY . .
 
-RUN mkdir -p /app/media
+RUN mkdir -p /app/staticfiles /app/media
 
 EXPOSE 8000
 
