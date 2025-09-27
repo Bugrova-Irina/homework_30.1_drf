@@ -3,7 +3,6 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from django.conf.global_settings import STATIC_ROOT, STATICFILES_DIRS
 from dotenv import load_dotenv
 
 load_dotenv()
