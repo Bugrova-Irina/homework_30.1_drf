@@ -66,22 +66,6 @@ class LessonTestCase(APITestCase):
         url = reverse("materials:lessons-list")
         response = self.client.get(url)
         data = response.json()
-        # result = {
-        #     "count": 1,
-        #     "next": None,
-        #     "previous": None,
-        #     "results": [
-        #         {
-        #             "id": self.lesson.pk,
-        #             "video": "https://youtube.com/",
-        #             "title": self.lesson.title,
-        #             "preview": None,
-        #             "description": self.lesson.description,
-        #             "course": self.course.pk,
-        #             "owner": self.user.pk,
-        #         }
-        #     ],
-        # }
 
         # Проверяем статус код
         self.assertEqual(response.status_code, status.HTTP_200_OK)
