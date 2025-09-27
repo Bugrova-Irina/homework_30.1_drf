@@ -97,12 +97,8 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#            sudo fuser -k 80/tcp || true
-#            docker ps --filter "publish=80" --format "{{.ID}}" | xargs -r docker stop
-#            docker ps -a --filter "publish=80" --format "{{.ID}}" | xargs -r docker rm
             docker stop myapp || true
             docker rm myapp || true
-#            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
             docker run -d \
             --name myapp \
             -p 80:8000 \
